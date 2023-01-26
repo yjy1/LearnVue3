@@ -1,53 +1,82 @@
 <template>
   <h1>一个人的信息</h1>
-  <h2>姓名：{{name}}</h2>
-  <h2>年龄：{{ age }}</h2>
-  <h3>工作种类：{{ job.type }}</h3>
-  <h3>薪水：{{ job.salary }}</h3>
+  <h2>姓名：{{person.name}}</h2>
+  <h2>年龄：{{ person.age }}</h2>
+  <h3>工作种类：{{ person.job.type }}</h3>
+  <h3>薪水：{{ person.job.salary }}</h3>
+  <h3>c:{{ person.job.a.b.c }}</h3>
+  <h3>爱好：{{ person.hobies }}</h3>
   <button @click="changeInfo">修改人的信息</button>
 
 </template>
 
 <script>
-import {ref} from 'vue'
+import {ref,reactive} from 'vue'
 export default {
   name: 'App',
   setup(){
     // 数据
-    let name =  ref('张三') /* ref(value: string): Ref<string>
- */
+    let name =  ref('张三')  
     let age = ref(18)
-    let job = ref({
+    let job1 = ref({
       type:'前端工程师',
       salary:'30k'
     })
+    /* 
+        reactive(target: object): object
+    */
+    let job = reactive({
+      type:'前端工程师',
+      salary:'30k',
+      a:{
+        b:{
+          c:333
+        }
+      }
+    })
+    // let hobies = ['抽烟','喝酒','烫头']
+    let hobies = reactive(['抽烟','喝酒','烫头'])
+    
+    let person =reactive({
+      name: '张三',
+      age: 18,
+      job: {
+        type: '前端工程师',
+        salary: '30k',
+        a: {
+          b: {
+            c: 333
+          }
+        }
+      },
+      hobies: ['抽烟', '喝酒', '烫头']
+    }) 
     // 方法
     function changeInfo(){
-      // name = '李四'
-      // age = 38
-      name.value = '李四'
-      age.value = 38
-      // job.type
-      /* 
-          (property) Ref<{ type: string; salary: string; }>.value: {
-             type: string;
-             salary: string;
-          }
-      */
-      // job.value = {
-      //   type:'web前端工程师',
-      //   salary:'35k'
-      // }
-      job.value.type  = 'web前端工程师'
-      job.value.salary = '35k'
-      console.log(job.value.type  )
+      // ref定义的这样修改
+      job1.value.type = 'Web前端'
+      job1.value.salary = '36k'
+      // reactive定义的这样修改
+      person.job.type = 'Web前端'
+      person.job.salary = '36k'
+      person.job.a.b.c = 555
+      person.hobies[0] = '学习'
+      // console.log(job.a)
+      // console.log(hobies[0])
+      // console.log(job1.value.type)
+      // console.log(person)
+      console.log(person.name)
+      console.log(person.age)
+      console.log(person.job.type)
     }
     
     // 返回一个对象（常用）
     return {
-      name,
-      age,
-      job,
+      // name,
+      // age,
+      // job,
+      // hobies,
+      person,
       changeInfo
     }
   }
