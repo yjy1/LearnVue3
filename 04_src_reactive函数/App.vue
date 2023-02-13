@@ -7,8 +7,6 @@
   <h3>c:{{ person.job.a.b.c }}</h3>
   <h3>爱好：{{ person.hobies }}</h3>
   <button @click="changeInfo">修改人的信息</button>
-  <button @click="addSex">添加一个sex属性</button>
-  <button @click="deleteName">删除一个name属性</button>
 
 </template>
 
@@ -63,22 +61,23 @@ export default {
       person.job.salary = '36k'
       person.job.a.b.c = 555
       person.hobies[0] = '学习'
+      // console.log(job.a)
+      // console.log(hobies[0])
+      // console.log(job1.value.type)
+      // console.log(person)
       console.log(person.name)
       console.log(person.age)
       console.log(person.job.type)
     }
-    function addSex(){
-      person.sex = '男'
-    }
-    function deleteName(){
-      delete person.name
-    }
+    
     // 返回一个对象（常用）
     return {
+      // name,
+      // age,
+      // job,
+      // hobies,
       person,
-      changeInfo,
-      addSex,
-      deleteName
+      changeInfo
     }
   }
 }
