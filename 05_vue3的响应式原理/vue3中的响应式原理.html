@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <script>
         // 源数据
         let person = {
-            name:'张三',
-            age:18
+            name: '张三',
+            age: 18
         }
         // 模拟vue2中实现响应式
         /*let p = {}
@@ -40,19 +42,67 @@
             //有人读取p的某个属性时调用
             get(target,propName){
                 console.log(`有人读取了p身上的${propName}属性` )
-                return target[propName]
+                // return target[propName]
+                return Reflect.get(target,propName)
             },
             //有人修改p的某个属性、或给p追加某个属性时调用
             set(target,propName,newValue){
                 console.log(`有人修改了p身上的${propName}属性` )
-                target[propName] = newValue
+                // target[propName] = newValue
+                Reflect.set(target,propName,newValue)
             },
             //有人删除p的某个属性时调用
             deleteProperty(target,propName){
                 console.log(`有人删除了p身上的${propName}属性` )
-                return delete target[propName]
+                // return delete target[propName]
+                return Reflect.defineProperty(target,propName)
             }
-        })
+        }) 
+
+        let obj = {
+            a: 1,
+            b: 2
+        }
+        // 通过Object.defineProperty去操作
+       /*  try {
+            Object.defineProperty(obj, 'c', {
+                get() {
+                    return 3
+                }
+            })
+            Object.defineProperty(obj, 'c', {
+                get() {
+                    return 4
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        } */
+
+
+
+        // 通过Reflect.defineProperty去操作
+        /*  const x1 =  Reflect.defineProperty(obj,'c',{
+              get(){
+                  return 3
+              }
+          })
+          console.log(x)
+          const x2 =  Reflect.defineProperty(obj,'c',{
+              get(){
+                  return 4
+              }
+          })
+          if(x2){
+              console.log('操作成功')
+          }else{
+              console.log('操作失败')
+          }
+          console.log(x2) */
+
+
+
     </script>
 </body>
+
 </html>
