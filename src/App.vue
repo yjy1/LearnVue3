@@ -1,84 +1,22 @@
 <template>
-  <h1>一个人的信息</h1>
-  <h2>姓名：{{person.name}}</h2>
-  <h2>年龄：{{ person.age }}</h2>
-  <h3>工作种类：{{ person.job.type }}</h3>
-  <h3>薪水：{{ person.job.salary }}</h3>
-  <h3>c:{{ person.job.a.b.c }}</h3>
-  <h3>爱好：{{ person.hobies }}</h3>
-  <button @click="changeInfo">修改人的信息</button>
-  <button @click="addSex">添加一个sex属性</button>
-  <button @click="deleteName">删除一个name属性</button>
-
+  <Demo @hello="showHelloMsg" msg="你好啊" name="杨程杰" >
+    <template v-slot:qwe >
+      <span>ycj</span>
+    </template>
+  </Demo>
 </template>
 
 <script>
-import {ref,reactive} from 'vue'
+import Demo from './components/Demo.vue'
 export default {
   name: 'App',
+  components: { Demo },
   setup(){
-    // 数据
-    let name =  ref('张三')  
-    let age = ref(18)
-    let job1 = ref({
-      type:'前端工程师',
-      salary:'30k'
-    })
-    /* 
-        reactive(target: object): object
-    */
-    let job = reactive({
-      type:'前端工程师',
-      salary:'30k',
-      a:{
-        b:{
-          c:333
-        }
-      }
-    })
-    // let hobies = ['抽烟','喝酒','烫头']
-    let hobies = reactive(['抽烟','喝酒','烫头'])
-    
-    let person =reactive({
-      name: '张三',
-      age: 18,
-      job: {
-        type: '前端工程师',
-        salary: '30k',
-        a: {
-          b: {
-            c: 333
-          }
-        }
-      },
-      hobies: ['抽烟', '喝酒', '烫头']
-    }) 
-    // 方法
-    function changeInfo(){
-      // ref定义的这样修改
-      job1.value.type = 'Web前端'
-      job1.value.salary = '36k'
-      // reactive定义的这样修改
-      person.job.type = 'Web前端'
-      person.job.salary = '36k'
-      person.job.a.b.c = 555
-      person.hobies[0] = '学习'
-      console.log(person.name)
-      console.log(person.age)
-      console.log(person.job.type)
+    function showHelloMsg(value){
+      alert(`你好啊,你触发了hello事件,我收到的参数是${value}`)
     }
-    function addSex(){
-      person.sex = '男'
-    }
-    function deleteName(){
-      delete person.name
-    }
-    // 返回一个对象（常用）
     return {
-      person,
-      changeInfo,
-      addSex,
-      deleteName
+      showHelloMsg
     }
   }
 }
