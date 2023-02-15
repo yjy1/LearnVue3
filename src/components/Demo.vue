@@ -1,36 +1,48 @@
 <template>
     <h1>一个人的信息</h1>
-    <h2>姓名：{{ person.name }}</h2>
-    <h2>年龄：{{ person.age }}</h2>
-    <button @click="test">测试触发一下Demo组件的Hello事件</button>
+    姓：<input type="text" v-model="person.firstName">
+    <br> 
+    名：<input type="text" v-model="person.lastName"> 
+    <br> 
+    全名：<span>{{ person.fullName }}</span>
+    <br> 
+    全名：<input type="text" v-model="person.fullName"> 
+
 </template>
 
 <script>
-import { ref, reactive } from 'vue'
+import { def } from '@vue/shared'
+import { ref, reactive,computed } from 'vue'
 export default {
     name: 'Demo',
-    props:['msg','name'],
-    emits:['hello'],
-   /*  beforeCreate(){
-        console.log('---beforeCreate---')
-    }, */
-    setup(props,context ) {
-        // console.log('---setup---',props )
-        // console.log('---setup---',context.attrs ) //详单与vue2中的$attrs
-        // console.log('---setup---',context.emit ) //触发自定义事件的
-        console.log('---setup---',context.slots ) //触发插槽的
-        let person = reactive({
-            name: '张三',
-            age: 18,
-        })
-
-        function test(){
-            context.emit('hello',666)
+    // vue2写法
+    /* computed:{
+        fullName(){
+          return  this.person.firstName + this.person.lastName
         }
+    }, */
+    setup() {
+        let person = reactive({
+            firstName: '张',
+            lastName:'三'
+        })
+        // 计算属性一简写(没有考虑计算属性被修改的情况)
+        /* person.fullName = computed(()=>{
+            return person.firstName + person.lastName
+        }) */
+        // 计算属性一完整写法(考虑读和写)
+        person.fullName = computed( {
+            get(){
+                return person.firstName + '-' + person.lastName
+            },
+            set(value){
+                person.firstName = value.split('-')[0]
+                person.lastName = value.split('-')[1]
+            }
+        })
         // 返回一个对象（常用）
         return {
             person,
-            test
         }
     }
 }
