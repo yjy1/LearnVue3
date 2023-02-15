@@ -1,48 +1,56 @@
 <template>
-    <h1>一个人的信息</h1>
-    姓：<input type="text" v-model="person.firstName">
-    <br> 
-    名：<input type="text" v-model="person.lastName"> 
-    <br> 
-    全名：<span>{{ person.fullName }}</span>
-    <br> 
-    全名：<input type="text" v-model="person.fullName"> 
-
+    <h2>当前求和为：{{sum}}</h2>
+    <button @click="sum++">点我+1</button>
+    <hr>
+    <h2>当前的信息为：{{ msg }}</h2>
+    <button @click="msg += '!'">修改当前信息</button>
 </template>
 
 <script>
-import { def } from '@vue/shared'
-import { ref, reactive,computed } from 'vue'
+import { ref ,watch } from 'vue'
 export default {
     name: 'Demo',
     // vue2写法
-    /* computed:{
-        fullName(){
-          return  this.person.firstName + this.person.lastName
-        }
-    }, */
+    // watch:{
+    //    /*  sum(newValue,oldValue){
+    //         console.log('sum被改变了',newValue,oldValue)
+    //     } */
+    //     sum:{
+    //         immediate:true,
+    //         deep:true,
+    //         handler(newValue,oldValue){
+    //             console.log('sum被改变了',newValue,oldValue)
+    //         }
+    //     }
+    // },
     setup() {
-        let person = reactive({
-            firstName: '张',
-            lastName:'三'
+        let sum = ref(0)
+        let msg = ref('你好啊')
+        // 监视
+        //情况一:监视ref所定义的一个响应式数据
+        watch(sum,(newValue,oldValue)=>{
+            console.log('sum被改变了',newValue,oldValue)
+        },{
+            immediate:true 
         })
-        // 计算属性一简写(没有考虑计算属性被修改的情况)
-        /* person.fullName = computed(()=>{
-            return person.firstName + person.lastName
+
+        //情况二:监视ref所定义的多个响应式数据
+      /*   watch(sum,(newValue,oldValue)=>{
+            console.log('sum被改变了',newValue,oldValue)
+        })
+        watch(msg,(newValue,oldValue)=>{
+            console.log('msg被改变了',newValue,oldValue)
         }) */
-        // 计算属性一完整写法(考虑读和写)
-        person.fullName = computed( {
-            get(){
-                return person.firstName + '-' + person.lastName
-            },
-            set(value){
-                person.firstName = value.split('-')[0]
-                person.lastName = value.split('-')[1]
-            }
+        
+        watch([sum,msg],(newValue,oldValue)=>{
+            console.log('sum或msg被改变了',newValue,oldValue)
+        },{
+            immediate:true 
         })
         // 返回一个对象（常用）
         return {
-            person,
+            sum,
+            msg
         }
     }
 }

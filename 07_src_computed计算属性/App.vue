@@ -1,5 +1,5 @@
 <template>
-  <Demo  >
+  <Demo @hello="showHelloMsg" msg="你好啊" name="杨程杰" >
     <template v-slot:qwe >
       <span>ycj</span>
     </template>
