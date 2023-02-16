@@ -1,7 +1,8 @@
 <template>
-    <h4>当前求和为: {{ sum }}</h4>
-    <button @click="sum++">点我+1</button>
+    <h4>当前的x值是: {{ x.y }}</h4>
+    <button @click="x.y++">点我x+1</button>
     <hr>
+    <h4>{{ person }}</h4>
     <h2>姓名：{{ name }}</h2>
     <h2>年龄：{{ age }}</h2>
     <h2>薪资：{{ job.j1.salary }}K</h2>
@@ -11,11 +12,11 @@
 </template>
 
 <script>
-import {ref, reactive, toRef ,toRefs,readonly,shallowReadonly} from 'vue'
+import {ref, reactive, toRef ,toRefs,shallowReactive,shallowRef} from 'vue'
 export default {
     name: 'Demo',
     setup() {
-        let sum = ref(0)
+        // let person = shallowReactive({ // 只考虑对象类型的第一层
         let person = reactive({
             name: '张三',
             age: 18,
@@ -25,12 +26,14 @@ export default {
                 }
             }
         }) 
-        // person = readonly(person)
-        person = shallowReadonly(person)
-        sum = readonly(sum)
+        let x = shallowRef({
+            y:0
+        })
+        console.log('%%%%%%%',x)
         return{
+            person,
             ...toRefs(person),
-            sum
+            x
         }
     }
 }
