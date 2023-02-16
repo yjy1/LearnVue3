@@ -21,7 +21,7 @@ export default {
         let sum = ref(0)
         let msg = ref('你好啊')
 
-        let person = reactive({
+        let person = ref({
             name:'张三',
             age:18,
             job:{
@@ -30,43 +30,18 @@ export default {
                 }
             }
         })
-        // 监视
-        //情况一:监视ref所定义的一个响应式数据
-       /*  watch(sum,(newValue,oldValue)=>{
-            console.log('sum被改变了',newValue,oldValue)
-        },{
-            immediate:true 
+        watch(sum,(newValue,oldValue)=>{
+            console.log('sum变了',newValue,oldValue)
         })
- */
-        //情况二:监视ref所定义的多个响应式数据
-       /*  watch([sum,msg],(newValue,oldValue)=>{
-            console.log('sum或msg被改变了',newValue,oldValue)
-        },{
-            immediate:true 
+     /*    watch(person.value,(newValue,oldValue)=>{
+            console.log('person变了',newValue,oldValue)
         }) */
-
-       /*    
-            情况三:监视reactive所定义的一个响应式数据的全部属性,
-            注意：1.此处无法正确获取oldValue 
-                2.强制开启深度监视（deep配置无效）
-       */
-      /*   watch(person,(newValue,oldValue)=>{
-            console.log('监视reactive',newValue ,oldValue)
-        },{deep:false})  //此处的deep配置无效*/
-
-        // 情况四:监视reactive所定义的一个响应式数据的某个属性
-        /* watch(()=>person.age,(newValue,oldValue)=>{
-            console.log('监视reactive',newValue ,oldValue)
-        }) */
-
-        // 情况五:监视reactive所定义的一个响应式数据的某些属性
-       /*  watch([()=>person.name,()=>person.age],(newValue,oldValue)=>{
-            console.log('监视reactive',newValue ,oldValue)
-        }) */
-        // 特殊情况
-        watch(()=>person.job,(newValue,oldValue)=>{
-            console.log('监视job',newValue ,oldValue)
-        },{deep:true }) //此处由于监视的是reactive素定义的对象中的某个属性，所以deep配置有效
+        watch(person,(newValue,oldValue)=>{
+            console.log('person变了',newValue,oldValue)
+        },{deep:true})
+        console.log(sum)
+        console.log(msg)
+        console.log(person)
         // 返回一个对象（常用）
         return {
             sum,
