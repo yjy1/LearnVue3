@@ -1,22 +1,18 @@
 <template>
-  <Demo  >
-    <template v-slot:qwe >
-      <span>ycj</span>
-    </template>
-  </Demo>
+  <button @click="isShowDemo = !isShowDemo">切换显示/隐藏</button>
+  <Demo v-if="isShowDemo"/>
 </template>
 
 <script>
+import {ref} from 'vue'
 import Demo from './components/Demo.vue'
 export default {
   name: 'App',
   components: { Demo },
   setup(){
-    function showHelloMsg(value){
-      alert(`你好啊,你触发了hello事件,我收到的参数是${value}`)
-    }
+    let isShowDemo = ref(true)
     return {
-      showHelloMsg
+      isShowDemo
     }
   }
 }
