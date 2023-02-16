@@ -6,9 +6,10 @@
 <script>
 import {ref} from 'vue'
 import Demo from './components/Demo.vue'
+import Test from './components/Test.vue'
 export default {
   name: 'App',
-  components: { Demo  },
+  components: { Demo ,Test},
   setup(){
     let isShowDemo = ref(true)
     return {

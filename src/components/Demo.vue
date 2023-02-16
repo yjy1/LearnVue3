@@ -1,4 +1,7 @@
 <template>
+    <h4>当前的x值是: {{ x.y }}</h4>
+    <button @click="x.y++">点我x+1</button>
+    <hr>
     <h4>{{ person }}</h4>
     <h2>姓名：{{ name }}</h2>
     <h2>年龄：{{ age }}</h2>
@@ -9,10 +12,11 @@
 </template>
 
 <script>
-import {ref, reactive, toRef ,toRefs} from 'vue'
+import {ref, reactive, toRef ,toRefs,shallowReactive,shallowRef} from 'vue'
 export default {
     name: 'Demo',
     setup() {
+        // let person = shallowReactive({ // 只考虑对象类型的第一层
         let person = reactive({
             name: '张三',
             age: 18,
@@ -21,30 +25,15 @@ export default {
                     salary: 20
                 }
             }
+        }) 
+        let x = shallowRef({
+            y:0
         })
-        // let name1 = person.name
-        // console.log('%%%', name1)
-        // let name2 = toRef(person, 'name')
-        // console.log('---', name2)
-
-        const x = toRefs(person)
-        console.log('toRefs',x)
-
-        // 返回一个对象（常用）
-        /*   return {
-             person,
-             name:toRef(person,'name'),
-             age: toRef(person,'age'),
-             salary: toRef(person.job.j1,'salary'),
-          } */
-       /*  return {
-            person,
-            name: ref(person.name),
-            age: ref(person.age),
-            salary: ref(person.job.j1.salary),
-        } */
+        console.log('%%%%%%%',x)
         return{
-            ...toRefs(person)
+            person,
+            ...toRefs(person),
+            x
         }
     }
 }
